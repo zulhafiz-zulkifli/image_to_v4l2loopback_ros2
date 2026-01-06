@@ -7,8 +7,12 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     # Declare launch arguments
+    topic_arg = DeclareLaunchArgument(
+        'topic', default_value='/image_raw',
+        description='ROS topic to subscribe for image data')
+
     device_arg = DeclareLaunchArgument(
-        'device', default_value='/dev/video1',
+        'device', default_value='/dev/video55',
         description='Path to video capture device')
 
     width_arg = DeclareLaunchArgument(
@@ -20,7 +24,7 @@ def generate_launch_description():
         description='Target image height')
 
     format_arg = DeclareLaunchArgument(
-        'format', default_value='YV12',
+        'format', default_value='YUYV',
         description='Target image pixel format')
 
     # Define the node action
@@ -30,6 +34,7 @@ def generate_launch_description():
         name='image_stream_node',
         output='screen',
         parameters=[{
+            'topic': LaunchConfiguration('topic'),
             'device': LaunchConfiguration('device'),
             'width': LaunchConfiguration('width'),
             'height': LaunchConfiguration('height'),
@@ -39,6 +44,7 @@ def generate_launch_description():
 
     # Create and return the launch description
     return LaunchDescription([
+        topic_arg,
         device_arg,
         width_arg,
         height_arg,

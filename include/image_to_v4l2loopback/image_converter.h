@@ -62,6 +62,9 @@ private:
   void param_yuyv();
   void fmt_yuyv(const cv::Mat &image, Buffer &buf);
 
+  void param_uyvy();
+  void fmt_uyvy(const cv::Mat &image, Buffer &buf);
+
   uint32_t width_;
   uint32_t height_;
   uint32_t fourcc_;
